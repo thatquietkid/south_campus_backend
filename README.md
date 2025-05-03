@@ -153,4 +153,6 @@ curl http://localhost:1323/courses
 
 ## 📄 License
 
-MIT License. Built by @thatquietkid
+[MIT License](LICENSE). 
+---
+## Built by [@thatquietkid](https://github.com/thatquietkid/)

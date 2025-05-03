@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "1323:1323"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=south_campus_user
+      - DB_PASSWORD=12345
+      - DB_NAME=south_campus
+      - DB_PORT=5432
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: south_campus_user
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: south_campus
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

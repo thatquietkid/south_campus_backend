@@ -21,6 +21,9 @@ south_campus_backend/
 
 ## 🔧 Setup
 
+Make sure you have [Docker](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/) installed.
+
+
 ### 1. Clone and Navigate
 
 ```bash
@@ -47,7 +50,7 @@ The following tables are migrated:
 ### 4. Start the Server
 
 ```bash
-go run main.go
+sudo docker-compose up --build
 ```
 
 ---

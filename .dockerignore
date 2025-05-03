@@ -1,0 +1,5 @@
+# Don't copy these files into the Docker image
+.git
+node_modules
+*.log
+*.env

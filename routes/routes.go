@@ -23,6 +23,7 @@ func RegisterRoutes(e *echo.Echo) {
 	admin.DELETE("/cafeteria-items/:id", handlers.DeleteCafeteriaItem)
 
 	// Public GET routes
+	e.GET("/", handlers.Welcome)
 	e.GET("/courses", handlers.GetCourses)
 	e.GET("/courses/:id", handlers.GetCourseByID)
 	e.GET("/cafeteria-items", handlers.GetCafeteriaItems)

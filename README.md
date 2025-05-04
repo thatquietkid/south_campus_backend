@@ -2,6 +2,8 @@
 
 This is a backend API for the South Campus App (University of Delhi), built using Go and Echo framework. It handles authentication and management of courses and cafeteria items with role-based access control using JWT.
 
+> [!NOTE]
+> This API is live and is being hosted on [Render](https://render.com/) -> [Visit this link](https://south-campus-backend.onrender.com).
 ---
 
 ## 📦 Project Structure

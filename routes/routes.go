@@ -28,5 +28,5 @@ func RegisterRoutes(e *echo.Echo) {
 	e.GET("/courses/:id", handlers.GetCourseByID)
 	e.GET("/cafeteria-items", handlers.GetCafeteriaItems)
 	e.GET("/hostels", handlers.GetAllHostels)
-	e.GET("/busroutes", handlers.GetAllBusRoutes)
+	e.GET("/bus-routes", handlers.GetAllBusRoutes)
 }

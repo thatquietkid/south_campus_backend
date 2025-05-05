@@ -1,3 +1,4 @@
+// handlers/bus_routes.go
 package handlers
 
 import (
@@ -9,13 +10,13 @@ import (
 )
 
 func GetAllBusRoutes(c echo.Context) error {
-	var busRoutes []models.BusRoute
+	var routes []models.BusRoute
 
-	if err := config.DB.Find(&busRoutes).Error; err != nil {
+	if err := config.DB.Find(&routes).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{
-			"error": "Failed to fetch bus route data",
+			"error": "Failed to fetch bus routes",
 		})
 	}
 
-	return c.JSON(http.StatusOK, busRoutes)
+	return c.JSON(http.StatusOK, routes)
 }

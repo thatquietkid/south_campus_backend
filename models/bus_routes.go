@@ -10,3 +10,6 @@ type BusRoute struct {
 	Description string
 	Schedule    []map[string]string `gorm:"type:jsonb"`
 }
+func (BusRoute) TableName() string {
+    return "bus_routes_combined"
+}

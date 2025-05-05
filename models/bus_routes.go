@@ -1,3 +1,4 @@
+// models/bus_route.go
 package models
 
 type BusRoute struct {
@@ -8,7 +9,11 @@ type BusRoute struct {
 	Schedule    []ScheduleEntry `gorm:"type:jsonb" json:"schedule"`
 }
 
-// ScheduleEntry represents each item in the schedule array
+// Set correct table name
+func (BusRoute) TableName() string {
+	return "bus_routes_combined"
+}
+
 type ScheduleEntry struct {
 	Stop string `json:"stop"`
 	Time string `json:"time"`

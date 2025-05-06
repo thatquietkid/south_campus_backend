@@ -29,4 +29,7 @@ func RegisterRoutes(e *echo.Echo) {
 	e.GET("/cafeteria-items", handlers.GetCafeteriaItems)
 	e.GET("/hostels", handlers.GetAllHostels)
 	e.GET("/bus-routes", handlers.GetAllBusRoutes)
+	e.GET("/events", handlers.GetAllEvents)
+	e.GET("/complaints", handlers.GetAllComplaints)
+	e.POST("/complaints", handlers.CreateComplaint)
 }

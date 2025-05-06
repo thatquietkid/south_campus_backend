@@ -25,7 +25,8 @@ func RegisterRoutes(e *echo.Echo) {
 	// Public GET routes
 	e.GET("/", handlers.Welcome)
 	e.GET("/courses", handlers.GetCourses)
-	e.GET("/courses/:id", handlers.GetCourseByID)
+	e.GET("/course-syllabus/:code", handlers.GetCourseSyllabusByCode)
+	e.GET("/course-attendance", handlers.GetCourseAttendance)
 	e.GET("/cafeteria-items", handlers.GetCafeteriaItems)
 	e.GET("/hostels", handlers.GetAllHostels)
 	e.GET("/bus-routes", handlers.GetAllBusRoutes)

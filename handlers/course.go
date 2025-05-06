@@ -15,17 +15,6 @@ func GetCourses(c echo.Context) error {
 	return c.JSON(http.StatusOK, courses)
 }
 
-// GET /courses/:id
-func GetCourseByID(c echo.Context) error {
-	id := c.Param("id")
-	var course models.Course
-	result := config.DB.First(&course, id)
-	if result.Error != nil {
-		return c.JSON(http.StatusNotFound, echo.Map{"error": "Course not found"})
-	}
-	return c.JSON(http.StatusOK, course)
-}
-
 // POST /courses
 func CreateCourse(c echo.Context) error {
 	var course models.Course
@@ -45,4 +34,43 @@ func DeleteCourse(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Failed to delete course"})
 	}
 	return c.JSON(http.StatusOK, echo.Map{"message": "Course deleted successfully"})
+}
+
+// GET /course-attendance
+func GetCourseAttendance(c echo.Context) error {
+	var courseAttendance []models.CourseAttendance
+	err := config.DB.Raw(`
+		SELECT c.title, c.code, a.attendance_percentage
+		FROM courses c
+		JOIN attendance a ON c.id = a.course_id
+	`).Scan(&courseAttendance).Error
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Failed to fetch course attendance"})
+	}
+
+	return c.JSON(http.StatusOK, courseAttendance)
+}
+
+// GET /course-syllabus/:code
+func GetCourseSyllabusByCode(c echo.Context) error {
+	code := c.Param("code")
+	var syllabus []models.CourseSyllabus
+
+	err := config.DB.Raw(`
+		SELECT c.title, s.unit_title, s.topic
+		FROM courses c
+		JOIN syllabus s ON c.id = s.course_id
+		WHERE c.code = ?
+	`, code).Scan(&syllabus).Error
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Failed to fetch syllabus"})
+	}
+
+	if len(syllabus) == 0 {
+		return c.JSON(http.StatusNotFound, echo.Map{"message": "No syllabus found for the given course code"})
+	}
+
+	return c.JSON(http.StatusOK, syllabus)
 }

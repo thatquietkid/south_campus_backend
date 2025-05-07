@@ -1,163 +1,94 @@
-# South Campus Backend
+# South Campus App (Flutter Frontend)
 
-This is a backend API for the South Campus App (University of Delhi), built using Go and Echo framework. It handles authentication and management of courses and cafeteria items with role-based access control using JWT.
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
+![Dart](https://img.shields.io/badge/Dart-Ready-blue?logo=dart)
+![API](https://img.shields.io/badge/Connected-Backend-green?logo=server)
 
-> [!NOTE]
-> This API is live and is being hosted on [Render](https://render.com/) -> [Visit this link](https://south-campus-backend.onrender.com).
----
+This is the Flutter frontend for the **South Campus App** (University of Delhi). It interacts with a Go backend and presents a mobile interface for students to access academic info, cafeteria menus, event updates, bus schedules, hostel details, and more.
 
-## 📦 Project Structure
-
-```
-south_campus_backend/
-├── config/              # Database configuration
-├── handlers/            # Route handler functions
-├── middleware/          # Custom middleware for auth and admin
-├── models/              # GORM models
-├── routes/              # Route registration
-├── main.go              # Entry point
-└── README.md            # Project documentation
-```
+> \[!NOTE]
+> The app fetches real-time data from a live backend hosted on [Render](https://render.com). Backend API: [https://south-campus-backend.onrender.com](https://south-campus-backend.onrender.com)
 
 ---
 
-## 🔧 Setup
+## 🚀 Features
 
-Make sure you have [Docker](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/) installed.
+* 📚 View Courses & Syllabus
+* 🧮 Check Attendance (dynamic)
+* 🥪 Cafeteria Menu (dynamic)
+* 🚌 Bus Routes with schedule (dynamic)
+* 🏨 Hostel Info (dynamic)
+* 📅 Events Feed (dynamic)
+* 🛠️ Submit Facility Complaints (dynamic)
 
+---
 
-### 1. Clone and Navigate
+## 📁 Project Structure
+
+```
+south_campus_app/
+├── lib/
+│   ├── main.dart            # Entry point
+│   ├── screens/             # Screens (Academics, Cafeteria, Transport, etc.)
+│   ├── models/              # Dart data models
+│   ├── services/            # API calls and network layer
+│   ├── widgets/             # Reusable components
+├── assets/                  # App icons, fonts, etc.
+├── pubspec.yaml             # Project dependencies
+└── README.md                # Project documentation
+```
+
+---
+
+## 🧑‍💻 Getting Started
+
+### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/thatquietkid/south_campus_backend.git
-cd south_campus_backend
+git clone https://github.com/thatquietkid/south_campus_app.git
+cd south_campus_app
 ```
 
-### 2. Configure Database
-
-Edit your PostgreSQL credentials in `config/db.go`:
-
-```go
-dsn := "host=localhost user=south_campus_user password=12345 dbname=south_campus port=5432 sslmode=disable"
-```
-
-### 3. Auto-Migrate Tables
-
-The following tables are migrated:
-
-* `users`
-* `courses`
-* `cafeteria_items`
-
-### 4. Start the Server
+### 2. Install Dependencies
 
 ```bash
-sudo docker-compose up --build
+flutter pub get
 ```
 
----
-
-## 🔐 Authentication (JWT)
-
-Login endpoint issues a JWT if credentials match:
-
-```http
-POST /login
-Content-Type: application/json
-
-{
-  "username": "adminuser",
-  "password": "adminpass"
-}
-```
-
-Returns:
-
-```json
-{
-  "token": "<JWT_TOKEN>"
-}
-```
-
-Use this token in headers:
-
-```http
-Authorization: Bearer <JWT_TOKEN>
-```
-
----
-
-## 🧑‍⚖️ Roles
-
-* `role = admin` → Full access (POST/DELETE)
-* `role = user` → Read-only access
-
----
-
-## 📚 API Endpoints
-
-### Public
-
-* `GET /courses` – Get all courses
-* `GET /courses/:id` – Get a course by ID
-* `GET /cafeteria-items` – List all cafeteria items
-
-### Authenticated (JWT required)
-
-* `POST /login` – Get token
-
-### Admin-only (JWT required + role `admin`)
-
-* `POST /courses` – Create a course
-* `DELETE /courses/:id` – Delete a course
-* `POST /cafeteria-items` – Add cafeteria item
-* `DELETE /cafeteria-items/:id` – Delete item
-
----
-
-## 🧪 Sample Users
-
-Insert this sample admin user (password is bcrypt-hashed):
-
-```sql
-INSERT INTO users (username, password, role) VALUES (
-  'adminuser',
-  '$2a$10$7ykk8XAxmIbX8BML6Yo6A.K8U5ZChItutZ1zCDmf6hsmNzEZ16Yl2',
-  'admin'
-);
-```
-
----
-
-## 📫 Postman Sample Requests
-
-### Login
+### 3. Run the App
 
 ```bash
-curl -X POST http://localhost:1323/login \
-  -H "Content-Type: application/json" \
-  -d '{"username": "adminuser", "password": "adminpass"}'
+flutter run
 ```
 
-### Create Course (Admin Only)
+Make sure a device or emulator is connected.
 
-```bash
-curl -X POST http://localhost:1323/courses \
-  -H "Authorization: Bearer <JWT_TOKEN>" \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Math 101", "description": "Intro to Math"}'
-```
+---
 
-### Get Courses
+## 🌐 API Integration
 
-```bash
-curl http://localhost:1323/courses
-```
+The app uses `http` package to fetch data from:
+
+* `/courses`
+* `/cafeteria-items`
+* `/bus-routes`
+* `/events`
+* `/complaints` (GET & POST)
+
+These are consumed using custom service classes under `lib/services/`.
+
+---
+
+## 🔒 Authentication
+
+Authentication is handled in the backend using JWT. Future versions of the app may include login flows for admin-only actions (e.g. adding cafeteria items).
 
 ---
 
 ## 📄 License
 
-[MIT License](LICENSE). 
+[MIT License](LICENSE)
+
 ---
+
 ## Built by [@thatquietkid](https://github.com/thatquietkid/)

@@ -13,11 +13,7 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() *gorm.DB {
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		log.Fatal("❌ DATABASE_URL is not set")
-	}
-
+	dsn := "postgresql://postgres:postgres@localhost:5432/auth_service"
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("❌ Failed to connect to DB: %v", err)
@@ -27,7 +23,7 @@ func ConnectDatabase() *gorm.DB {
 	fmt.Println("✅ Connected to Database")
 
 	if os.Getenv("APP_ENV") != "production" {
-		err = DB.AutoMigrate(&models.Course{}, &models.CafeteriaItem{}, &models.User{})
+		err = DB.AutoMigrate(&models.User{})
 		if err != nil {
 			log.Fatalf("❌ AutoMigrate failed: %v", err)
 		}
